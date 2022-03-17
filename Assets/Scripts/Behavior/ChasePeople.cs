@@ -1,23 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
 public class ChasePeople : MonoBehaviour {
 
 	public Vector3 finalTarget;
 	public Animation BladeAnimation;
-	private NavMeshAgent directionNavAgent;
+	private UnityEngine.AI.NavMeshAgent directionNavAgent;
 
 	private Vector3 startPos;
 	private Quaternion startRot;
 	
 	// Use this for initialization
 	void Start() {
-		directionNavAgent = GetComponent<NavMeshAgent>();
-		if(!rigidbody.isKinematic)
+		directionNavAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+		if(!GetComponent<Rigidbody>().isKinematic)
 		{
-			rigidbody.useGravity=false;
-			rigidbody.isKinematic=true;
+			GetComponent<Rigidbody>().useGravity=false;
+			GetComponent<Rigidbody>().isKinematic=true;
 		}
 		startPos = transform.position;
 		startRot = transform.localRotation;
@@ -33,20 +33,20 @@ public class ChasePeople : MonoBehaviour {
 	void Update () {
 		if (CroudControl.isPlaying)
 		{
-			if(rigidbody.isKinematic)
+			if(GetComponent<Rigidbody>().isKinematic)
 			{
 				directionNavAgent.enabled=true;
-				rigidbody.useGravity=true;
-				rigidbody.isKinematic=false;
+				GetComponent<Rigidbody>().useGravity=true;
+				GetComponent<Rigidbody>().isKinematic=false;
 				BladeAnimation.Play();
 			}
 			MoveToClosest();
 		}else{
-			if(!rigidbody.isKinematic)
+			if(!GetComponent<Rigidbody>().isKinematic)
 			{
 				directionNavAgent.enabled=false;
-				rigidbody.useGravity=false;
-				rigidbody.isKinematic=true;
+				GetComponent<Rigidbody>().useGravity=false;
+				GetComponent<Rigidbody>().isKinematic=true;
 				BladeAnimation.Stop();
 			}
 		}
